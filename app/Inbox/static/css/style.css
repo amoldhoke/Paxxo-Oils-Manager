@@ -1,0 +1,534 @@
+/* -------------------------------
+# START CONFIGURATION
+------------------------------- */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    max-width: 100%;
+}
+
+/* -------------------------------
+# FOOTER 
+------------------------------- */
+
+.wrapper {
+    min-height: 100%;
+    margin-bottom: -50px;
+}
+
+#footer,
+.push {
+    height: 50px;
+}
+
+/* -------------------------------
+# NAVBAR 
+------------------------------- */
+
+#btn-nav {
+    float: right;
+    margin-right: 25px;
+    cursor: pointer;
+}
+
+/* -------------------------------
+# LOGIN
+------------------------------- */
+#card-login {
+    width: 450px;
+}
+.login-border {
+    border-top: .4rem solid #198754;
+    border-bottom: .4rem solid #198754;
+    border-radius: 10px;
+}
+#btn-enter {
+    border-radius: 15px;
+    font-size: 16px;
+}
+
+/* -------------------------------
+#  OTHER PARTS (MIXED PARTS)
+------------------------------- */
+/* All the button inside the modal */
+.btn-modal {
+    width: 70px;
+}
+/* Width on action buttons (table) */
+.btn-action {
+    width: 45px;
+}
+
+#input-bg {
+    background-color: #fff;
+    border-radius: 0px;
+}
+#btn-back {
+    width: 45px;
+    float: left;
+    border-radius: 0px;
+}
+/* Button to reply the message */
+#reply {
+    width: 110px;
+    float: right;
+    margin-left: 5px;
+    background-color: #2e856e;
+    border-radius: 0px;
+}
+/* label of the inputs (individual messages) */
+.side-lebel {
+    width: 45px;
+    font-size: 15px;
+    text-decoration: none;  /* Upload paper clip icon (customer.html) */
+}
+.text-td {
+    font-size: 14px;
+}
+#resp-datetime {
+    display: none;
+}
+#mini-dashboard {
+    display: none;
+}
+#note {
+    font-size: 12px;
+}
+#login-watermark {
+    width: 300px;
+}
+
+/* -----------------------------------------
+#  AUTO LOGOUT
+------------------------------------------ */
+/* Modal logout in 5 minutes */
+.note-warning {
+    font-size: 12px;
+}
+/* Button '+30 minutes' and 'Ok' */
+#btn-30, #btn-ok-logout {
+    width: 80px;
+}
+/* Modal info after auto logout */
+.note-info {
+    font-size: 13px;
+}
+
+/* -----------------------------------------
+#  IF NO MESSAGE (Show this content)
+------------------------------------------ */
+#msg {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 26px;
+}
+#refresh {
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 15px;
+    color: #111;
+}
+#refresh:hover {
+    color: #198754;
+}
+
+/* -------------------------------
+#  ERRORS '500' and '404'
+------------------------------- */
+/* Error position */
+.error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+/* Error text levels */
+.error-txt1 {
+    font-size: 18px;
+}
+.error-txt2 {
+    font-size: 20px;
+}
+.error-404 {
+    font-size: 120px;
+}
+
+/* -------------------------------
+#  TYPED JS (EFFECT)
+------------------------------- */
+.block-position {
+    width: 80%;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+/* -------------------------------
+# MESSAGE (PULSE)
+------------------------------- */
+.pulse {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    position: fixed;
+    right: 30px;
+    bottom: 75px;
+    padding: 5px;
+    animation: animate 3s linear infinite;
+}
+@keyframes animate {
+    0% {box-shadow: 0 0 0 0 rgba(1, 152, 117, .7), 0 0 0 0 rgba(1, 152, 117, .7);}
+    40% {box-shadow: 0 0 0 30px rgba(255, 109, 74, 0), 0 0 0 0 rgba(1, 152, 117, .7);}
+    80% {box-shadow: 0 0 0 50px rgba(255, 109, 74, 0), 0 0 0 0 rgba(255, 109, 74, 0);}
+    100% {box-shadow: 0 0 0 0 rgba(255, 109, 74, 0), 0 0 0 0 rgba(255, 109, 74, 0);}
+}
+
+/* -------------------------------
+# CUSTOM SWEETALERT 
+------------------------------- */
+/* All texts centered */
+.swal-text {
+    text-align: center;
+}
+/* Icon setting */
+.swal-icon--success:before,
+.swal-icon--success:after,
+.swal-icon--success__hide-corners {
+    background: none !important;
+}
+.swal-icon--success {
+    /* Color of ring */
+    border-color: #198754;
+}
+.swal-icon--success__line {
+    /* Animation */
+    background-color: #198754;
+}
+.swal-button {
+    padding: 7px 19px;
+    border-radius: 5px;
+    background-color: #111;
+    font-size: 12px;
+    border: 1px solid #111;
+}
+.swal-button:focus {
+    /* remove the silver border around the button */
+    box-shadow: none;
+}
+.swal-button:not([disable]):hover {
+    /* hover effect */
+    background-color: transparent;
+    color: #111;
+    border: 1px solid #111;
+}
+
+/* -------------------------------
+#  BOOTSTRAP (FORM GREEN THEME)
+------------------------------- */
+.form-control:focus {
+    border-color: green;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+/* Green buttons (not succes) and 'X' on sidebar */
+.btn:focus, .btn-active, .btn-close:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Checked box green theme (show/hide password) */
+.form-check-input:checked {
+    background-color: #8abaae;
+    border: green !important;
+    box-shadow: 0 0 8px rgba(1, 152, 117, 0.4) !important;
+}
+.form-check-input {
+    border: green !important;
+    box-shadow: 0 0 8px rgba(1, 152, 117, 0.4) !important;
+}
+.form-switch .form-check-input:focus {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='grey'/%3e%3c/svg%3e");      
+}
+
+/* -------------------------------
+# PAGINATION (Grey theme)
+---------------------------------- */
+.my-page {
+    font-size:11px;
+    float: right;
+}
+.page-item.active .page-link {
+    font-size:11px;
+    columns: #fff;
+    background-color: #6c757d;
+    border: 1px solid #6c757d;
+}
+.pagination > li > a {
+    font-size:11px;
+    background-color: #fff;
+    color: #6c757d;
+}
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > span > a:focus,
+.pagination > span > a:hover {
+    color: #111;
+    background-color: #d3d3d3;
+    border: 1px solid #6c757d;
+    box-shadow: none;
+}
+
+/* -------------------------------
+# BACKEND SPINNER
+---------------------------------- */
+#bg-spinner {
+    top: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    display: none;
+    background-color: rgba(1, 1, 1, 0.7);
+}
+#position-spinner {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+#spinner {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    border: 6px #d3d3d3 solid;
+    border-top: 6px #198754 solid;
+    animation: loading 1s infinite linear;
+}
+@keyframes loading {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ********************************* RESPONSIVE SECTION ***************************** */
+/* -------------------------------
+# RESOLUTION FOR TABLETS (1199 px)
+------------------------------- */
+@media(max-width: 1199px) {
+    /* Responsive table */
+    .table thead {
+        display: none; 
+    }
+    .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+    }
+    .table tr {
+        margin-bottom: 15px;
+        border: 1px solid #111;
+        border-radius: 3px;
+    }
+    .table td {
+        text-align: right;
+        padding-left: 35%;
+        position: relative;
+        border: 1px solid transparent;
+    }
+    .table td::before {
+        content: attr(label);
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 15px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+    }
+    .table > thead > tr:first-child {
+        display: none;
+        margin-top: 5px;
+    }
+    /* Responsive border */
+    #responsive-border {
+        border: 1px solid #a9a9a9;
+    }
+    /* First cell - change */
+    #top-table {
+        background-color: #111;
+        color: #fff;
+    }
+    body {
+        overflow-y: scroll;
+        /* scrollbar-width: none;
+        -ms-overflow-style: none; */
+    }
+}
+
+/* -------------------------------
+# RESOLUTION FOR SMARTPHONE (575 px)
+------------------------------- */
+@media(max-width: 575px) {
+   /* ======= START SECTION ======== */
+   /* Text Small (levels) */
+   .txt-sm {
+    font-size: 12px;
+   }
+   .txt-sm2 {
+    font-size: 14px;
+   }
+   .txt-sm3 {
+    font-size: 16px;
+   }
+   .txt-sm4 {
+    font-size: 18px;
+   }
+   .txt-sm5 {
+    font-size: 20px;
+   }
+   /* ======= INBOX SECTION ======== */
+   /* Desktop mode hidden */
+   #desk-datetime {
+    display: none;
+   }
+   #dashboard {
+    display: none;
+   }
+   /* Smartphone mode show */
+   #resp-datetime {
+    display: inline;
+    font-size: 11px;
+   }
+   #mini-dashboard {
+    display: inline;
+   }
+   /* If no messages */
+   #msg {
+    font-size: 20px;
+   }
+   #refresh {
+    font-size: 12px;
+   }
+   /* Global search */
+   #global-search {
+    margin-top: -20px;
+   }
+   /* Action buttons (table) */
+   .btn-action {
+    width: 40px;
+   }
+   /* Font size (table) */
+   .text-td {
+    font-size: 13px;
+   }
+
+   /* ======= MESSAGE SECTION ======== */
+   /* Btn to reply the message */
+   #reply {
+    width: 90;
+   }
+   /* Margin-top on buttons */
+   #btn-back, #reply {
+    margin-top: 10px;
+   }
+   /* Hide <br> tags */
+   .hide-br {
+    display: none;
+   }
+
+   /* ======= POPUP MODALS ======== */
+   /* Width on buttons of the modals */
+   .btn-modal {
+    width: 60px;
+   }
+   /* Ask if you want mark as a read */
+   #mark-ask {
+    font-size: 13px;
+   }
+   /* FontAwesome STACK icons */
+   #stack {
+    font-size: 12px;
+   }
+   #stack1 {
+    font-size: 65px;
+   }
+   /* 'X' to close the modal popup */
+   .btn-close {
+    font-size: 14px;
+   }
+   /* Buttons on Warning to autologout */
+   #btn-30, #btn-ok-logout {
+    width: 65px;
+    font-size: 12px;
+   }
+   /* Note information on warning autologout modal */
+   .note-warning {
+    font-size: 11px;
+   }
+   /* Note information on Info after autologout modal */
+   .note-info {
+    font-size: 12px;
+   }
+
+   /* ======= HOME SECTION ======== */
+   /* Typed effect font size */
+   .typed-text {
+    font-size: 24px;
+   }
+   /* Pulse effect in message popup */
+   .pulse {
+    width: 45px;
+    height: 45px;
+    right: 15px;
+    bottom: 62px;
+   }
+   #note {
+    font-size: 10px;
+   }
+
+   /* ======= LOGIN SECTION ======== */
+   #card-login {
+    width: 95%;
+   }
+   #login-watermark {
+    width: 150px;
+   }
+   #btn-enter {
+    font-size: 14px;
+   }
+
+   /* ======= ERRORS SECTION ======== */
+   .error-404 {
+    font-size: 90px;
+   }
+   .error-txt1 {
+    font-size: 12px;
+   }
+   /* on 500 page */
+   .error-txt2 {
+    font-size: 18px;
+   }
+   /* ======= MIXED PARTS ======== */
+   /* Footer */
+   #footer {
+    font-size: 13px;
+   }
+   /* sidebar */
+   #offcanvasRightLabel {
+    font-size: 18px;
+   }
+   /* spinner size  */
+   #spinner {
+    width: 45px;
+    height: 45px;
+   }
+}

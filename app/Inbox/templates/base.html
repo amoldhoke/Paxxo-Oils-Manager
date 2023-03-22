@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock title %}</title>
+    <!-- Bootstrap 5 cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Boxicon -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- logo -->
+    <link rel="icon" href="{% static 'img/logo.ico' %}">
+    <!-- Static -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="wrapper">
+        {% block image %}
+        <style>
+            body {
+                background-image: url("{% static 'img/mining.jpg' %}");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+            }
+        </style>
+        {% endblock image %}
+        <!-- Navbar -->
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <!-- Icon and title (content 1) -->
+                <div class="col-sm">
+                    <a class="navbar-brand flex-grow-1" style="color: #fff; margin-left: 25px;">
+                        {% block nav-content %}
+                            <a href="/">
+                            <img src="{% static 'img/oilrig.png' %}" class="align-middle" style="width: 40px"></img><span style="font-size: 16px; position: absolute; bottom: 15px; color: white">&nbsp;PAXXO Oil </span></a>
+                        {% endblock nav-content %}
+                    </a>
+                </div>
+
+                <!-- Date and Time denied in frontend (content 2) -->
+                {% block datetime %}{% endblock datetime %}
+
+                <!-- Hamburger (content 3) -->
+                <div class="col-sm">
+                    <a class="navbar-brand flex-grow-1" id="btn-nav" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </div>
+            </nav>
+        </header>
+    <!--  Block content (Root) -->
+    {% block content %}{% endblock content %}
+    </div> <!-- END // Wrapper -->
+
+    <!-- Sidebar (Bootstrap Offcanvas) -->
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas-header">
+            <img src="{% static 'img/oilrig.png' %}" style="width: 45px"></img>
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel" style="position:relative; left:-10px">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-grid gap-2">
+                {% block sidebar-content %}
+                    <a href="{% url 'inbox' %}" class="btn btn-secondary">Login</a>
+                {% endblock sidebar-content %}
+                <hr><br>
+                <center class="mt-5">
+                    <img src="{% static 'img/shadow.png' %}" style="width: 300px;"></img>
+                </center>
+            </div>
+        </div>
+    </div>
+      
+    <!-- Footer -->
+    <footer class="bg-dark text-center text-lg-start" id="footer" style="color: #fff;">
+        <div class="text-center " style="background-color: rgba(0,0,0,0.2); padding: 12px;">
+            &copy; {% now "Y" %} Copyright:
+            <a class="text-light" href="#" style="text-decoration: none;">
+                <span style="color: #8abaae">www.paxxo.com</span>
+            </a>
+        </div>
+    </footer>
+
+    {% block auto-logout %}
+    <!-- Button to call 'logout warning' modal -->
+    <button id="warning" class="btn" data-bs-toggle="modal" data-bs-target="#warningModal" style="display: none;"></button>
+    <!-- Auto Logout button Hidden (informative after auto logout) -->
+    <a id="info" href="/autologout" class="btn" style="display: none;"></a>
+    {% endblock auto-logout %}
+
+    <!--======================= INCLUDES ======================-->
+    {% include "modals/logout.html" %}
+    {% include "modals/message.html" %}
+    {% include "modals/reply.html" %}
+    {% include "modals/logoutInfo.html" %}
+    {% include "modals/logoutWarning.html" %}
+
+    <!-- Message from backend (login) -->
+    {% if form.errors %}
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        swal("Denied !", "Enter your data correctly.", "info")
+    </script>
+    {% endif %}
+    
+    <!-- Message from backend (Success Message) -->
+    {% for message in messages %}
+        {% if message.tags == "success" %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>
+            var m = "{{ message }}";
+            swal("Perfect !", m, "success")
+        </script>
+        {% endif %}
+    {% endfor %}
+
+    <!-- Auto logout (home.html) -->
+    <!-- Message from backend (Success Message) -->
+    {% for message in messages %}
+        {% if message.tags == "info" %}
+        <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+        <script>
+            $(document).ready(function() {
+                $('#infoModal').modal('show')
+            });
+        </script>
+        {% endif %}
+    {% endfor %}
+    
+    
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- InputMask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.7/jquery.inputmask.min.js" integrity="sha512-jTgBq4+dMYh73dquskmUFEgMY5mptcbqSw2rmhOZZSJjZbD2wMt0H5nhqWtleVkyBEjmzid5nyERPSNBafG4GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Typed JS -->
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <!-- SweetAlert (Frontend) -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Static JS -->
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- Typed effect -->
+    {% block typed %}
+    <script>
+        var typed = new Typed('#element', {
+            strings: [
+                'are an oil company',
+                'extract oil and gas',
+                'have the best deals',
+                'offer free quote'
+            ],
+            typeSpeed: 30,
+            backSpeed: 20,
+            loop: true
+        });
+    </script>
+    {% endblock typed %}
+
+
+</body>
+</html>

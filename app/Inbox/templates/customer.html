@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+<!-- Title on tab browser -->
+{% block title %}Customer{% endblock title %}
+
+<!-- Block Typed JS denied here -->
+{% block typed %}{% endblock typed %}
+
+<!-- Block Nav-Bar Content -->
+{% block nav-content %}
+<i class="fas fa-user-alt"></i>&nbsp;&nbsp; <span style="font-size: 16px">{{ customer.name }}</span>
+{% endblock nav-content %}
+
+<!-- Block sidebar content -->
+{% block sidebar-content %}
+<center>
+    <!-- Welcome User -->
+    Welcome: <span class="text-success">{{ user.get_username }}</span>
+    <br><br>
+</center>
+<a class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+<a href="{% url 'admin:index' %}" target="_blank" class="btn btn-outline-success btn-sm">Admin</a>
+{% endblock sidebar-content %}
+
+<!-- Page content -->
+{% block content %}
+<div class="container">
+<div class="card text-center mt-3">
+    <div class="card-header txt-sm">
+        Received on: {{ customer.created_at | date:'m/d/Y' }} at {{ customer.created_at | date:'H:i' }}
+    </div>
+    <div class="card-body">
+        <form method="POST" action="/mark_message" enctype="multiple/form-data">
+            {% csrf_token %}
+            <!-- Input ID Hidden -->
+            <input type="hidden" value="{{ customer.id }}" name="id">
+
+            <div class="input-group mb-2">
+                <span class="input-group-text justify-content-center side-label"><i class="fas fa-phone-alt"></i></span>
+                <input id="input-bg" class="form-control txt-sm" value="{{ customer.phone }}" readonly>            
+            </div>
+
+            <div class="input-group mb-2">
+                <span class="input-group-text justify-content-center side-label"><i class="fas fa-envelope"></i></span>
+                <input id="input-bg" class="form-control txt-sm" value="{{ customer.email }}" readonly>            
+            </div>
+
+            <div class="input-group mb-2">
+                <span class="input-group-text justify-content-center side-label"><i class="fas fa-user-edit"></i></span>
+                <input id="input-bg" class="form-control txt-sm" value="{{ customer.subject }}" readonly>            
+            </div>
+            
+            <div class="form-group">
+                <textarea class="form-control txt-sm" id="input-bg" rows="10" readonly>{{ customer.message }}</textarea>
+            </div>
+
+            <div class="input-group mb-3 mt-3">
+                <a class="bg-dark text-light input-group-text justify-content-center side-lebel" href="/media/{{ customer.files }}" target="_blank" id="input-bg">
+                    <i class="fas fa-paperclip"></i>
+                </a>
+                {% if customer.file == '' %}
+                    <input class="form-control txt-sm" id="input-bg" value="No attachment" readonly>
+                {% else %}
+                    <input class="form-control txt-sm" id="input-bg" value="{{ customer.files }}" readonly>
+                {% endif %}
+            </div>
+
+            <!-- This value goes to backend -->
+            {% if customer.status == "Pending" %}
+            <input type="hidden" class="form-control" name="status" value="Read">
+            {% endif %}
+
+            <!-- Include Mark Modal -->
+            {% include 'modals/mark.html' %}
+
+        </form>
+        <br class="hide-br">
+        {% if customer.status == "Pending" %}
+        <a id="btn-back" class="btn btn-dark txt-sm" title="Back" data-bs-toggle='modal' data-bs-target="#markModal">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        {% else %}
+        <a href="{% url 'inbox' %}" id='btn-back' class="btn btn-dark txt-sm" title="Back">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        {% endif %}
+
+        <a class="btn text-light txt-sm" id="reply" title="Reply email" data-bs-toggle="modal" data-bs-target="#replyModal">
+            <i class="fas fa-reply"></i>&nbsp;&nbsp; <span>Reply</span>
+        </a>
+    </div>
+</div>
+</div> <!-- End // Container -->
+
+<!-- Ajax Spinner (Backend) -->
+<div id="bg-spinner">
+    <div id="position-spinner">
+        <span id="spinner"></span>
+    </div>
+</div>
+
+<!-- Script to prevent back button -->
+<script>
+    history.pushState(null, null, null);
+    window.addEventListener('popstate', function() {
+        history.pushState(null, null, null);
+    });
+</script>
+{% endblock content %}

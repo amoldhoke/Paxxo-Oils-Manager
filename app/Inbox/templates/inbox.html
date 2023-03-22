@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+<!-- Title on tab browser -->
+{% block title %}Inbox{% endblock title %}
+
+<!-- Block image denied here -->
+{% block image %}{% endblock image %}
+
+<!-- Block Typed JS denied here -->
+{% block typed %}{% endblock typed %}
+
+<!-- Block Nav-Bar Content -->
+{% block nav-content %}
+<i class="fas fa-envelope" style="color: #8abaae"></i>&nbsp; Inbox
+{% endblock nav-content %}
+
+<!-- DateTime (desktop mode) -->
+{% block datetime %}
+<div class="text-light" id="desk-datetime" style="font-size: 12px; margin-top: 5px">{% now "l (m/d/Y)" %} &nbsp;
+    <span style="color: #8abaae; font-weight: bold;" id="clock"></span>
+</div>
+{% endblock datetime %}
+
+<!-- Block sidebar content -->
+{% block sidebar-content %}
+<center>
+    <!-- Welcome User -->
+    Welcome: <span class="text-success">{{ user.get_username }}</span>
+    <br>
+    <!-- DateTime (responsive mode) -->
+    <div id="resp-datetime">{% now "l (m/d/Y)" %}
+        <span id="mini-clock"></span>
+        <hr>
+    </div>
+    <!-- Dashboard (responsive mode) -->
+    <div id="mini-dashboard">
+        {% include 'dashboard/dashboard.html' %}
+    </div>
+</center>
+<hr>
+<!-- Buttons -->
+<a class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+<a href="{% url 'admin:index' %}" target="_blank" class="btn btn-outline-success btn-sm">Admin</a>
+{% endblock sidebar-content %}
+
+<!-- Page content -->
+{% block content %}
+<div class="container-fluid mt-3" style="width: 90%;">
+
+    <!-- Dashboard -->
+    <div id="dashboard" class='hide'>
+        {% include 'dashboard/dashboard.html' %}
+    </div>
+    <br>
+
+    <!-- Global Search -->
+    <form id="global-search" class='hide'>
+        <div class="input-group input-group-sm mb-3">
+            <input class="form-control input-sm" name="q" type="text" placeholder="Search for..." value="{{ request.GET.q }}">
+            <button class="btn btn-secondary" title="Search">
+                <i class="fas fa-search"></i>
+            </button>
+            <a href="{% url 'inbox' %}" class="btn btn-dark" style="margin-left: 2px;" title="Refresh">
+                <i class="fas fa-sync-alt"></i>
+            </a>
+        </div>
+    </form>
+    <!-- Table of message -->
+    <div class="col-lg-12 hide">
+        <div style="margin-top: 5px">
+            <table class="table table-sm">
+                <thead class="table-secondary">
+                    <tr>
+                        <th style="width: 18%;">Name</th>
+                        <th style="width: 13%;">Phone</th>
+                        <th style="width: 18%;">Email</th>
+                        <th style="width: 18%;">Subject</th>
+                        <th style="width: 15%;">Recieved on</th>
+                        <th style="width: 10%;">Status</th>
+                        <th style="width: 8%; text-align: center;" colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <!-- Data from backend -->
+                {% for customer in customers %}
+                <tr class="text-td" id="chk_td">
+                    <td id="top-table" label="Name">{{ customer.name }}</td>
+                    <td id="responsive-border" label="Phone">{{ customer.phone }}</td>
+                    <td id="responsive-border" label="Email">{{ customer.email }}</td>
+                    <td id="responsive-border" label="Subject">{{ customer.subject }}</td>
+                    <td id="responsive-border" label="Recieved on">{{ customer.created_at | date:"m/d/Y (H:i)" }}</td>
+                    {% if customer.status == "Pending" %}
+                    <td id="responsive-border" label="Status" class="text-danger">{{ customer.status }}</td>
+                    {% else %}
+                    <td id="responsive-border" label="Status" class="text-success">{{ customer.status }}</td>
+                    {% endif %}
+                    <td>
+                        <button class="btn btn-secondary btn-sm btn-action" title="Delete message" data-bs-toggle="modal" data-bs-target="#deleteModal{{ customer.pk }}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <a class="btn text-light btn-sm btn-action" style="background-color: #2e856e" title="Read message" href="/customer/{{ customer.id }}">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </td>
+                </tr>
+                <!-- Modal delete confirmation -->
+                {% include 'modals/delete.html' %}
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <!-- Pagination -->
+    <nav>
+        <div class="my-page">
+        {% if customers.has_other_pages %}
+        <ul class="pagination">
+            {% if customers.has_previous %}
+                <a href="?page=1 {% if request.GET.q %} &q={{ request.GET.q }}{% endif %}" class="btn btn-outline-secondary mb-4" style="border-radius: 1px; border: 1px solid #d3d3d3; font-size:11px;">First</a>
+
+                <li class="page-item"><a class="page-link" href="?page={{ customers.previous_page_number }} {% if request.GET.q %} &q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-left"></i></a></li>
+                {% else %}
+                <li class="page-item disabled"></li>
+                {% endif %}
+
+                {% for i in customers.paginator.page_range %}
+                {% if customers.number == i %}
+                <li class="page-item active"><span class="page-link">{{ i }}<span class="sr-only"></span></span></li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }} {% if request.GET.q %} &q={{ request.GET.q }}{% endif %}">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                
+                {% if customers.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{ customers.next_page_number }} {% if request.GET.q %} &q={{ request.GET.q }}{% endif %}"><i class="fas fa-angle-double-right"></i></a></li>
+                <a href="?page={{ customers.paginator.num_pages }} {% if request.GET.q %} &q={{ request.GET.q }}{% endif %}" class="btn btn-outline-secondary mb-4" style="border-radius: 1px; border: 1px solid #d3d3d3; border-left: none; font-size:11px;">Last</a>
+                {% else %}
+                <li class="page-item disabled"></li>
+            {% endif %}
+
+        </ul>
+        {% endif %}
+    </div>
+    </nav>
+</div> <!-- END //container -->
+<br><br><br><br><br>
+
+<!-- If no messages, show this content -->
+<span class="text-danger" id="msg"></span>
+<!-- Button to refresh the page -->
+<a href="{% url 'inbox' %}" id="refresh"></a>
+
+{% endblock content %}

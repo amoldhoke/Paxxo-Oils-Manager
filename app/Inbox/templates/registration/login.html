@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+<!-- Title on tab browser -->
+{% block title %}Login{% endblock title %}
+
+<!-- Block auto logout denied here -->
+{% block auto-logout %}{% endblock auto-logout %}
+
+<!-- Block Typed JS denied here -->
+{% block typed %}{% endblock typed %}
+
+<!-- Block sidebar content -->
+{% block sidebar-content %}
+    <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+{% endblock sidebar-content %}
+
+<!-- Page content -->
+{% block content %}
+<div class="container mt-5" id="card-login">
+    <div class="card p-3 login-border">
+        <span class="text-center mt-3 text-pulse txt-sm2"><strong>RESTRICTED ACCESS</strong></span>
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            <div class="input-group mb-2 mt-4">
+                <input type="text" class="form-control txt-sm2" name="username" placeholder="Username">
+            </div>
+            <div class="input-group mb-2">
+                <input type="password" class="form-control txt-sm2" id="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input" onclick="myFunction()" type="checkbox" style="float: right;">
+            </div>
+            <div class="d-grid gap-2">
+                <input class="btn btn-success btn-sm mt-4 mb-3" type="submit" value="Enter" id="btn-enter">
+            </div>
+        </form>
+        <center>
+            <img src="{% static 'img/shadow.png' %}" id="login-watermark" "></img>
+        </center>
+    </div>
+</div> <!-- END // Container -->
+{% endblock content %}
