@@ -55,12 +55,15 @@
             </div>
 
             <div class="input-group mb-3 mt-3">
+                {% if customer.files == '' %}
+                <a class="bg-dark text-light input-group-text justify-content-center side-lebel" id="input-bg">
+                    <i class="fas fa-paperclip"></i>
+                </a>
+                    <input class="form-control txt-sm" id="input-bg" value="No attachment" readonly>
+                {% else %}
                 <a class="bg-dark text-light input-group-text justify-content-center side-lebel" href="{{ customer.files.url }}" target="_blank" id="input-bg">
                     <i class="fas fa-paperclip"></i>
                 </a>
-                {% if customer.file == '' %}
-                    <input class="form-control txt-sm" id="input-bg" value="No attachment" readonly>
-                {% else %}
                     <input class="form-control txt-sm" id="input-bg" value="{{ customer.files }}" readonly>
                 {% endif %}
             </div>
